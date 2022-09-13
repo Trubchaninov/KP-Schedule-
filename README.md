@@ -8,11 +8,13 @@
   - Данное программное средство располагает достаточным функционалом для построения расписания, его изменения.
 
 **Скриншот приложения**:
-
+![abc](https://github.com/Trubchaninov/KP-Schedule-/blob/main/11.png)
 
 ## Зависимости
 
 **Диаграмма классов**:
+![abc](https://github.com/Trubchaninov/KP-Schedule-/blob/main/13.png)
+![abc](https://github.com/Trubchaninov/KP-Schedule-/blob/main/12.png)
 
 ## Установка
 
