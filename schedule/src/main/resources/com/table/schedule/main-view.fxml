@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import tornadofx.control.*?>
+
+<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.table.schedule.MainController">
+   <top>
+       <TitledPane collapsible="false" prefHeight="63.0" prefWidth="600.0" text="Навигация по расписаниям" BorderPane.alignment="CENTER">
+           <ToolBar prefHeight="40.0" prefWidth="200.0">
+               <Label text="Расписания" />
+               <ListView fx:id="schedulesList" prefHeight="0.0" prefWidth="200.0" />
+               <Button mnemonicParsing="false" onAction="#selectSchedule" text="Открыть" />
+           </ToolBar>
+       </TitledPane>
+   </top>
+   <left>
+       <VBox fx:id="creator" alignment="TOP_CENTER" prefHeight="337.0" prefWidth="149.0" style="-fx-border-width: 2; -fx-border-color: black;" BorderPane.alignment="CENTER">
+           <Label text="Создать новое событие">
+              <font>
+                  <Font name="System Bold" size="11.0" />
+              </font>
+           </Label>
+         <Label text="Название" />
+         <TextField fx:id="titleEvent" />
+         <Label text="Начало события" />
+         <DateTimePicker fx:id="start" />
+         <Label text="Окончание" />
+         <DateTimePicker fx:id="stop" />
+         <Button mnemonicParsing="false" onAction="#createEvent" prefHeight="26.0" prefWidth="106.0" text="Создать">
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Button>
+       </VBox>
+   </left>
+   <center>
+      <Accordion fx:id="listEvents" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
