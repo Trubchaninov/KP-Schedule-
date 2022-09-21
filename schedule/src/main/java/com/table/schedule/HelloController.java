@@ -1,6 +1,8 @@
 package com.table.schedule;
 
 import com.table.schedule.DBeditor.DBConnection;
+import com.table.schedule.DBeditor.Dao;
+import com.table.schedule.DBeditor.ModelPass;
 import com.table.schedule.DBeditor.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,7 @@ public class HelloController implements Initializable {
     public ToggleButton visiblity;
     public PasswordField password;
     public TextField name;
+    Dao dbConnection;
 
     /** enter in program
      * @throws IOException no user
@@ -29,7 +32,7 @@ public class HelloController implements Initializable {
     private void SignIn() throws IOException {
         int UserID;
         if(!name.getText().isEmpty() && !password.getText().isEmpty()) {
-            UserID = DBConnection.getUser(name.getText(), password.getText());
+            UserID = dbConnection.getUser(name.getText(), password.getText());
             if(UserID!=-1){
                 enterToSchedule(UserID);
                 name.getScene().getWindow().hide();
@@ -45,7 +48,7 @@ public class HelloController implements Initializable {
     private void SignUp() throws IOException {
         int UserID;
         if(!name.getText().isEmpty() && !password.getText().isEmpty()) {
-            UserID = DBConnection.addUser(new User(-1, name.getText(), password.getText(), visiblity.isSelected()));
+            UserID = dbConnection.addUser(new User(-1, name.getText(), password.getText(), visiblity.isSelected()));
             if(UserID!=-1){
                 enterToSchedule(UserID);
             name.getScene().getWindow().hide();
@@ -70,6 +73,7 @@ public class HelloController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DBConnection.getDBConnection();
+        ModelPass pass=new ModelPass(1);
+        dbConnection= pass.getGenerator();
     }
 }

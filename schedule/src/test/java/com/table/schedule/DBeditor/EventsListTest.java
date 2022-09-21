@@ -15,7 +15,8 @@ class EventsListTest {
     @Test
     void getAllElements() {
         JFXPanel fxPanel = new JFXPanel();
-        DBConnection.getDBConnection();
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.getDBConnection();
         EventsList eventsList= new EventsList(1);
         eventsList.events.clear();
         eventsList.addElement(LocalDateTime.of(24,4,8,0,0),
@@ -28,8 +29,8 @@ class EventsListTest {
     @Test
     void testAddElement() {
         JFXPanel fxPanel = new JFXPanel();
-
-        DBConnection.getDBConnection();
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.getDBConnection();
         EventsList eventsList= new EventsList(1);
         eventsList.events.clear();
         eventsList.addElement(LocalDateTime.of(24,4,8,0,0),
@@ -40,7 +41,8 @@ class EventsListTest {
     @Test
     void updateElement() {
         JFXPanel fxPanel = new JFXPanel();
-        DBConnection.getDBConnection();
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.getDBConnection();
         EventsList eventsList= new EventsList(0);
         eventsList.addElement(LocalDateTime.of(24,4,8,0,0),
                 LocalDateTime.of(24,4,8,0,0),"k",0);
@@ -52,7 +54,8 @@ class EventsListTest {
     @Test
     void deleteElement() {
         JFXPanel fxPanel = new JFXPanel();
-        DBConnection.getDBConnection();
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.getDBConnection();
         EventsList eventsList= new EventsList(0);
         eventsList.addElement(LocalDateTime.of(24,4,8,0,0),
                 LocalDateTime.of(24,4,8,0,0),"k",8);

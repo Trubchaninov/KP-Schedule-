@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * Class for work with DataBase
  */
-public class DBConnection {
+public class DBConnection implements Dao{
     public static final String DB_URL = "jdbc:h2:/db/SchedulesDB";
     public static final String DB_Driver = "org.h2.Driver";
     public static final String TableSchedules="Schedules";
@@ -17,7 +17,7 @@ public class DBConnection {
     /**
      * get connection
      */
-    public static void getDBConnection() {
+    public void getDBConnection() {
         try {
             Class.forName(DB_Driver);
             Connection connection = DriverManager.getConnection(DB_URL);
@@ -43,7 +43,7 @@ public class DBConnection {
     /**
      * @param Table deletable
      */
-    private static void deleteTable(String Table)
+    private void deleteTable(String Table)
     {
         String deleteTableSQL = "DROP TABLE "+Table;
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
@@ -59,7 +59,7 @@ public class DBConnection {
     /**
      * create new table
      */
-    private static void createTableSchedule() {
+    private void createTableSchedule() {
         String createTableSQL = "CREATE TABLE "+ TableSchedules+ " ("
                 + "ID INT NOT NULL auto_increment, "
                 + "Start DATETIME NOT NULL, "
@@ -81,7 +81,7 @@ public class DBConnection {
     /**
      * create new table
      */
-    private static void createTableUser() {
+    private void createTableUser() {
         String createTableSQL = "CREATE TABLE "+ TableUser+ " ("
                 + "ID INT NOT NULL auto_increment, "
                 + "Login varchar(20) NOT NULL UNIQUE, "
@@ -101,7 +101,7 @@ public class DBConnection {
     /**
      * @param elementsDAO list of users
      */
-    public static void getUsers(ObservableList<User> elementsDAO) {
+    public void getUsers(ObservableList<User> elementsDAO) {
         String selection = "select * from "+ TableUser +" where Availability = False";
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
             assert dbConnection != null;
@@ -125,7 +125,7 @@ public class DBConnection {
      * @param Password of user
      * @return id
      */
-    public static int getUser(String Login,String Password) {
+    public int getUser(String Login,String Password) {
         String selection = "select * from "+ TableUser+" where Login='"+Login+"' AND Password='"+Password+"'";
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
             assert dbConnection != null;
@@ -145,7 +145,7 @@ public class DBConnection {
      * @param id of user
      * @return user
      */
-    public static User getUser(int id) {
+    public User getUser(int id) {
         String selection = "select * from "+ TableUser+" where ID="+id;
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
             assert dbConnection != null;
@@ -167,7 +167,7 @@ public class DBConnection {
     /**
      * @param elementsDAO list of events
      */
-    public static void getEvents(ObservableList<ScheduleEvent> elementsDAO) {
+    public void getEvents(ObservableList<ScheduleEvent> elementsDAO) {
         String selection = "select * from "+ TableSchedules;
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
             assert dbConnection != null;
@@ -197,7 +197,7 @@ public class DBConnection {
      * @param elementsDAO list of events
      * @param UserID id
      */
-    public static void getEventsForUser(ObservableList<ScheduleEvent> elementsDAO,int UserID) {
+    public void getEventsForUser(ObservableList<ScheduleEvent> elementsDAO,int UserID) {
         String selection = "select * from "+ TableSchedules + " where UserID=" + UserID +" order by Start";
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
             assert dbConnection != null;
@@ -227,7 +227,7 @@ public class DBConnection {
      * @param user new
      * @return id of user
      */
-    public static int addUser(User user) {
+    public int addUser(User user) {
         String insertTableSQL = "INSERT INTO "+ TableUser
                 + " (Login,Password,Availability) " + "VALUES "
                 + "('"+user.getLogin()+"','"+user.getPassword()+"','"+user.getAvailability()+"')";
@@ -257,7 +257,7 @@ public class DBConnection {
      * @param element addable
      * @return id
      */
-    public static int addEvent(ScheduleEvent element) {
+    public int addEvent(ScheduleEvent element) {
         String insertTableSQL;
         if(element.getStop()!=null)
         insertTableSQL = "INSERT INTO "+ TableSchedules
@@ -292,7 +292,7 @@ public class DBConnection {
      * @param element editable
      * @return result
      */
-    public static boolean editEvent(ScheduleEvent element) {
+    public boolean editEvent(ScheduleEvent element) {
         String updateTableSQL = String.format("UPDATE "+ TableSchedules
                         + " SET Start='%s',Stop='%s',Title='%s' where ID=%s;",
                 element.getStart(),element.getStop(),element.getTitle(),element.getID());
@@ -312,7 +312,7 @@ public class DBConnection {
      * @param ID of event
      * @return result
      */
-    public static boolean deleteEvent(int ID) {
+    public boolean deleteEvent(int ID) {
         String deleteTableSQL = String.format("DELETE from "+ TableSchedules +" WHERE ID=%s;",ID);
         try (Connection dbConnection = DriverManager.getConnection(DB_URL)) {
             assert dbConnection != null;

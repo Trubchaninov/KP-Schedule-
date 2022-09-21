@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
  */
 public class EventsList {
     ObservableList<ScheduleEvent> events;
+    Dao dbConnection;
     public EventsList(int User)
     {
         events = FXCollections.observableArrayList();
-        DBConnection.getDBConnection();
-        DBConnection.getEventsForUser(events,User);
+        ModelPass pass=new ModelPass(1);
+        dbConnection=pass.getGenerator();
+        dbConnection.getEventsForUser(events,User);
     }
 
     /**
@@ -34,7 +36,7 @@ public class EventsList {
     {
         int id;
         ScheduleEvent temp=new ScheduleEvent.ScheduleEventBuilder(-1,start,userID).setStop(stop).setTitle(title).build();
-        id=DBConnection.addEvent(temp);
+        id=dbConnection.addEvent(temp);
         if(id!=-1){
             temp=new ScheduleEvent.ScheduleEventBuilder(id,start,userID).setStop(stop).setTitle(title).build();
             events.add(temp);
@@ -50,7 +52,7 @@ public class EventsList {
     {
         int id;
         ScheduleEvent temp=new ScheduleEvent.ScheduleEventBuilder(-1,start,userID).setTitle(title).build();
-        id=DBConnection.addEvent(temp);
+        id=dbConnection.addEvent(temp);
         if(id!=-1){
             temp=new ScheduleEvent.ScheduleEventBuilder(id,start,userID).setTitle(title).build();
             events.add(temp);
@@ -61,7 +63,7 @@ public class EventsList {
      * @param NewElement editable
      */
     public void updateElement(ScheduleEvent NewElement) {
-        if(DBConnection.editEvent(NewElement))
+        if(dbConnection.editEvent(NewElement))
             for(ScheduleEvent el: events)
                 if(el.getID()==NewElement.getID())
                     events.set(events.indexOf(el),NewElement);
@@ -71,7 +73,7 @@ public class EventsList {
      * @param ID deletable
      */
     public void deleteElement(int ID) {
-        if(DBConnection.deleteEvent(ID))
+        if(dbConnection.deleteEvent(ID))
             events.removeIf(el -> el.getID() == ID);
     }
 }

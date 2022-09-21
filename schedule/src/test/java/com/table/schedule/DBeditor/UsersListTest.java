@@ -13,7 +13,8 @@ class UsersListTest {
     void getUsers() {
         JFXPanel fxPanel = new JFXPanel();
         UsersList usersList=new UsersList();
-        DBConnection.addUser(new User(1,"d","d",false));
+        DBConnection dbConnection =new DBConnection();
+        dbConnection.addUser(new User(1,"d","d",false));
         Assert.assertEquals(usersList.getUsers().size(),3);
     }
 
@@ -21,7 +22,8 @@ class UsersListTest {
     void getUser() {
         JFXPanel fxPanel = new JFXPanel();
         UsersList usersList=new UsersList();
-        DBConnection.addUser(new User(1,"d","d",false));
+        DBConnection dbConnection =new DBConnection();
+        dbConnection.addUser(new User(1,"d","d",false));
         Assert.assertEquals(usersList.getUser(1).getLogin(),"a");
     }
 }

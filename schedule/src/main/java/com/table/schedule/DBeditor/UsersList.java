@@ -6,14 +6,15 @@ import javafx.collections.ObservableList;
 /**
  * list of users
  */
-public class UsersList {
+public class UsersList{
     ObservableList<User> users;
-
+    Dao dbConnection;
     public UsersList()
     {
         users = FXCollections.observableArrayList();
-        DBConnection.getDBConnection();
-        DBConnection.getUsers(users);
+        ModelPass pass=new ModelPass(1);
+        dbConnection=pass.getGenerator();
+        dbConnection.getUsers(users);
     }
 
     /**
@@ -29,7 +30,7 @@ public class UsersList {
      */
     public User getUser(int id)
     {
-        return DBConnection.getUser(id);
+        return dbConnection.getUser(id);
     }
 
 }
